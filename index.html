@@ -6,14 +6,12 @@
     <meta name="theme-color" content="#667eea">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>HalalCheck - Scanner Halal Gratuit</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -28,73 +26,41 @@
             margin: 0 auto;
             min-height: 100vh;
             background: #fff;
-            position: relative;
-            box-shadow: 0 0 40px rgba(0,0,0,0.2);
         }
 
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 20px;
+            padding: 20px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            font-size: 28px;
+            margin-bottom: 5px;
         }
 
         .header p {
             opacity: 0.9;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .install-button {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 8px 16px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            font-size: 12px;
-            margin-top: 10px;
-            cursor: pointer;
-            display: none;
-            transition: all 0.3s;
-        }
-
-        .install-button:hover {
-            background: rgba(255,255,255,0.3);
+            font-size: 14px;
         }
 
         .nav-tabs {
             display: flex;
             background: #f8f9fa;
             border-bottom: 2px solid #e9ecef;
-            position: sticky;
-            top: 70px;
-            z-index: 99;
         }
 
         .nav-tab {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
             background: none;
             border: none;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             color: #666;
-            transition: all 0.3s;
             position: relative;
         }
 
@@ -112,29 +78,16 @@
             background: #667eea;
         }
 
-        .nav-icon {
-            font-size: 18px;
-            margin-bottom: 3px;
-            display: block;
-        }
-
         .content {
             padding: 20px;
-            min-height: calc(100vh - 150px);
         }
 
         .section {
             display: none;
-            animation: fadeIn 0.3s;
         }
 
         .section.active {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .search-container {
@@ -151,7 +104,6 @@
             border: 2px solid #e9ecef;
             border-radius: 10px;
             font-size: 16px;
-            transition: border-color 0.3s;
         }
 
         .search-input:focus {
@@ -170,12 +122,6 @@
             font-weight: 600;
             margin-top: 15px;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .search-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
         }
 
         .search-button:disabled {
@@ -189,17 +135,10 @@
             padding: 20px;
             margin: 20px 0;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            animation: slideUp 0.3s;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .product-header {
             display: flex;
-            align-items: start;
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -248,38 +187,11 @@
             color: white;
         }
 
-        .status-checking {
-            background: linear-gradient(135deg, #6c757d, #5a6268);
-            color: white;
-        }
-
         .ingredient-analysis {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 15px;
             margin: 15px 0;
-        }
-
-        .ingredient-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .ingredient-item:last-child {
-            border-bottom: none;
-        }
-
-        .ingredient-status {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
         }
 
         .loading {
@@ -302,31 +214,12 @@
             100% { transform: rotate(360deg); }
         }
 
-        .recent-products {
-            margin-top: 30px;
-        }
-
-        .recent-products h3 {
-            margin-bottom: 15px;
-            color: #666;
-            font-size: 16px;
-        }
-
-        .recent-item {
-            background: #f8f9fa;
-            padding: 12px;
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
             border-radius: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .recent-item:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
+            margin: 15px 0;
         }
 
         .info-card {
@@ -339,7 +232,6 @@
         .info-card h3 {
             color: #667eea;
             margin-bottom: 15px;
-            font-size: 18px;
         }
 
         .info-card p {
@@ -348,72 +240,26 @@
             margin-bottom: 10px;
         }
 
-        .info-card ul {
-            margin-left: 20px;
-            color: #666;
-            line-height: 1.8;
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #adb5bd;
-        }
-
-        .empty-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .contributors {
-            text-align: center;
-            padding: 20px;
+        .test-btn {
+            flex: 1;
+            padding: 10px;
             background: #f8f9fa;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .contributors h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .contributors p {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .badge-new {
-            background: #28a745;
-            color: white;
-            padding: 2px 8px;
+            border: 2px solid #667eea;
             border-radius: 10px;
-            font-size: 11px;
-            margin-left: 5px;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
         }
 
-        @media (max-width: 430px) {
-            .app-container {
-                max-width: 100%;
-                box-shadow: none;
-            }
+        .test-btn:hover {
+            background: #667eea;
+            color: white;
         }
     </style>
 </head>
@@ -421,197 +267,139 @@
     <div class="app-container">
         <div class="header">
             <h1>🌙 HalalCheck</h1>
-            <p>Scanner gratuit avec Open Food Facts</p>
-            <button class="install-button" id="installButton" onclick="installApp()">
-                📱 Installer l'application
-            </button>
+            <p>Scanner gratuit - Version 2.0</p>
         </div>
 
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="switchTab('scanner')">
-                <span class="nav-icon">🔍</span>
-                Scanner
+                🔍 Scanner
             </button>
             <button class="nav-tab" onclick="switchTab('guide')">
-                <span class="nav-icon">📚</span>
-                Guide
-            </button>
-            <button class="nav-tab" onclick="switchTab('about')">
-                <span class="nav-icon">ℹ️</span>
-                À propos
+                📚 Guide
             </button>
         </div>
 
         <div class="content">
-            <!-- Scanner Section -->
             <div id="scanner" class="section active">
                 <div class="search-container">
                     <h2 style="margin-bottom: 15px;">🔍 Rechercher un produit</h2>
                     <input type="text" 
                            id="searchInput" 
                            class="search-input" 
-                           placeholder="Nom du produit ou code-barres..."
+                           placeholder="Ex: Nutella, Coca Cola, Kinder..."
                            onkeypress="if(event.key === 'Enter') searchProduct()">
                     <button class="search-button" id="searchBtn" onclick="searchProduct()">
                         Analyser le produit
                     </button>
+                    
+                    <div class="test-buttons">
+                        <button class="test-btn" onclick="testProduct('nutella')">Test: Nutella</button>
+                        <button class="test-btn" onclick="testProduct('coca cola')">Test: Coca</button>
+                        <button class="test-btn" onclick="testProduct('haribo')">Test: Haribo</button>
+                    </div>
                 </div>
 
                 <div id="searchResults"></div>
 
-                <div class="recent-products" id="recentProducts">
-                    <h3>🕐 Recherches récentes</h3>
-                    <div id="recentList"></div>
+                <div id="debugInfo" style="display:none; background: #f8f9fa; padding: 10px; border-radius: 10px; margin-top: 20px;">
+                    <h4>Info Debug:</h4>
+                    <p id="debugText"></p>
                 </div>
             </div>
 
-            <!-- Guide Section -->
             <div id="guide" class="section">
                 <div class="info-card">
                     <h3>🥩 Ingrédients à surveiller</h3>
-                    <ul>
-                        <li><strong>Gélatine (E428, E441)</strong> - Souvent porcine</li>
-                        <li><strong>E120 (Carmin)</strong> - Colorant d'insectes</li>
-                        <li><strong>E471</strong> - Mono et diglycérides (origine animale possible)</li>
-                        <li><strong>E472</strong> - Esters (vérifier l'origine)</li>
-                        <li><strong>E542</strong> - Phosphate d'os</li>
-                        <li><strong>Présure</strong> - Dans certains fromages</li>
-                        <li><strong>L-cystéine (E920)</strong> - Peut venir de porc</li>
-                    </ul>
+                    <p><strong>HARAM :</strong></p>
+                    <p>• Porc et dérivés (gélatine de porc, E471 d'origine porcine)</p>
+                    <p>• Alcool et dérivés</p>
+                    <p>• Carmin/Cochenille (E120)</p>
+                    <p>• Sang et dérivés</p>
+                    
+                    <p style="margin-top: 15px;"><strong>DOUTEUX :</strong></p>
+                    <p>• Gélatine (origine non spécifiée)</p>
+                    <p>• E471-E477 (peuvent être d'origine animale)</p>
+                    <p>• Arômes (peuvent contenir de l'alcool)</p>
+                    <p>• Enzymes/Présure (dans les fromages)</p>
                 </div>
 
                 <div class="info-card">
                     <h3>✅ Labels de confiance</h3>
-                    <p><strong>France :</strong> AVS, Muslim Food, Halal de France</p>
-                    <p><strong>Europe :</strong> Halal Food Council, Euro Halal</p>
-                    <p><strong>International :</strong> JAKIM (Malaisie), MUI (Indonésie)</p>
+                    <p>• AVS (France)</p>
+                    <p>• HMC (UK)</p>
+                    <p>• JAKIM (Malaisie)</p>
+                    <p>• MUI (Indonésie)</p>
+                    <p>• Halal Europe</p>
                 </div>
 
                 <div class="info-card">
-                    <h3>💡 Conseils pratiques</h3>
-                    <p>• Les produits <strong>végans</strong> sont souvent une alternative sûre</p>
+                    <h3>💡 Conseils</h3>
+                    <p>• Les produits végans sont généralement sûrs</p>
                     <p>• Vérifiez toujours la liste complète des ingrédients</p>
                     <p>• En cas de doute, contactez le fabricant</p>
-                    <p>• Méfiez-vous des arômes non spécifiés</p>
-                </div>
-
-                <div class="info-card">
-                    <h3>🔬 Codes E problématiques</h3>
-                    <p><strong style="color: #dc3545;">Haram :</strong> E120, E542, E904, E920</p>
-                    <p><strong style="color: #ffc107;">Douteux :</strong> E471-E477, E481-E483, E491-E495</p>
-                    <p><strong style="color: #28a745;">Halal :</strong> E100, E140, E160, E300-E321, E406-E409</p>
-                </div>
-            </div>
-
-            <!-- About Section -->
-            <div id="about" class="section">
-                <div class="info-card">
-                    <h3>📱 Application 100% Gratuite</h3>
-                    <p>Cette application utilise la base de données libre Open Food Facts pour analyser les produits.</p>
-                    <p>✅ Sans publicité</p>
-                    <p>✅ Sans compte obligatoire</p>
-                    <p>✅ Respect de votre vie privée</p>
-                    <p>✅ Fonctionne hors ligne une fois installée</p>
-                </div>
-
-                <div class="info-card">
-                    <h3>🤝 Comment ça marche ?</h3>
-                    <p>1. <strong>Recherchez</strong> un produit par son nom ou code-barres</p>
-                    <p>2. <strong>Analysez</strong> automatiquement les ingrédients</p>
-                    <p>3. <strong>Vérifiez</strong> le statut Halal/Haram/Douteux</p>
-                    <p>4. <strong>Partagez</strong> vos découvertes avec la communauté</p>
-                </div>
-
-                <div class="contributors">
-                    <h4>🌟 Projet communautaire</h4>
-                    <p>Développé pour la communauté musulmane francophone</p>
-                    <p style="margin-top: 10px;">
-                        <strong>Base de données :</strong> Open Food Facts<br>
-                        <strong>Version :</strong> 1.0.0 PWA<br>
-                        <strong>Contact :</strong> via GitHub
-                    </p>
-                </div>
-
-                <div class="info-card" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
-                    <h3>💪 Contribuez au projet !</h3>
-                    <p>• Signalez les erreurs sur GitHub</p>
-                    <p>• Ajoutez des produits sur Open Food Facts</p>
-                    <p>• Partagez l'app avec vos proches</p>
-                    <p>• Suggérez des améliorations</p>
+                    <p>• Privilégiez les produits avec certification halal</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Configuration
-        const API_URL = 'https://world.openfoodfacts.org/api/v2';
-        
+        // Base de données locale de produits pour test
+        const LOCAL_DB = {
+            'nutella': {
+                name: 'Nutella',
+                brand: 'Ferrero',
+                ingredients: 'Sucre, huile de palme, NOISETTES 13%, cacao maigre 7,4%, LAIT écrémé en poudre 6,6%, LACTOSÉRUM en poudre, émulsifiants (lécithines [SOJA]), vanilline',
+                status: 'doubtful',
+                reason: 'Peut contenir des émulsifiants E471 d\'origine animale non spécifiée et possibles traces d\'alcool dans la vanilline'
+            },
+            'coca cola': {
+                name: 'Coca-Cola',
+                brand: 'The Coca-Cola Company',
+                ingredients: 'Eau gazéifiée, sucre, colorant (caramel E150d), acidifiant (acide phosphorique), arômes naturels (extraits végétaux), caféine',
+                status: 'halal',
+                reason: 'Aucun ingrédient d\'origine animale. Certifié halal dans plusieurs pays'
+            },
+            'haribo': {
+                name: 'Haribo Goldbears',
+                brand: 'Haribo',
+                ingredients: 'Sirop de glucose, sucre, gélatine, dextrose, concentrés de fruits, acidifiant (acide citrique), arômes',
+                status: 'haram',
+                reason: 'Contient de la gélatine de porc'
+            }
+        };
+
         // Ingrédients problématiques
         const HARAM_INGREDIENTS = [
-            'porc', 'pork', 'bacon', 'lard', 'saindoux', 'jambon', 'ham',
-            'gélatine de porc', 'gelatine de porc', 'pork gelatin',
-            'alcool', 'alcohol', 'ethanol', 'vin', 'wine', 'bière', 'beer',
-            'e120', 'carmin', 'cochenille', 'cochineaI',
-            'e542', 'e904', 'e920', 'l-cysteine', 'l-cystéine'
+            'porc', 'pork', 'bacon', 'lard', 'saindoux', 
+            'gélatine de porc', 'pork gelatin', 'schwein',
+            'alcool', 'alcohol', 'ethanol', 'wine', 'vin',
+            'e120', 'carmin', 'cochenille'
         ];
 
         const DOUBTFUL_INGREDIENTS = [
-            'gélatine', 'gelatine', 'gelatin',
-            'e471', 'e472', 'e473', 'e474', 'e475', 'e476', 'e477',
-            'e481', 'e482', 'e483',
-            'e491', 'e492', 'e493', 'e494', 'e495',
-            'mono', 'diglycérides', 'diglycerides',
-            'émulsifiant', 'emulsifier',
-            'arômes', 'aromes', 'flavoring', 'flavour',
-            'enzyme', 'présure', 'rennet'
+            'gélatine', 'gelatin', 'e471', 'e472', 'e473',
+            'mono', 'diglycérides', 'émulsifiant', 'vanilline',
+            'arômes', 'enzymes', 'présure'
         ];
 
-        // PWA
-        let deferredPrompt;
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installButton').style.display = 'inline-block';
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('App installed');
-                    }
-                    deferredPrompt = null;
-                    document.getElementById('installButton').style.display = 'none';
-                });
-            }
-        }
-
-        // Service Worker registration
-        if ('serviceWorker' in navigator) {
-           navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW:', err));
-                console.log('Service Worker registered');
-            }).catch(err => {
-                console.log('Service Worker registration failed - normal en local');
-            });
-        }
-
-        // Switch tabs
         function switchTab(tabName) {
             document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
             
-            event.target.closest('.nav-tab').classList.add('active');
+            event.target.classList.add('active');
             document.getElementById(tabName).classList.add('active');
         }
 
-        // Search product
+        function testProduct(productName) {
+            document.getElementById('searchInput').value = productName;
+            searchProduct();
+        }
+
         async function searchProduct() {
-            const query = document.getElementById('searchInput').value.trim();
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
             if (!query) {
-                showError('Veuillez entrer un nom de produit ou un code-barres');
+                showError('Veuillez entrer un nom de produit');
                 return;
             }
 
@@ -620,191 +408,201 @@
             
             // Show loading
             searchBtn.disabled = true;
-            searchBtn.textContent = 'Recherche en cours...';
-            resultsDiv.innerHTML = `
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>Analyse en cours...</p>
-                </div>
-            `;
+            searchBtn.textContent = 'Recherche...';
+            resultsDiv.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Analyse en cours...</p></div>';
 
+            // Vérifier d'abord la base locale
+            if (LOCAL_DB[query]) {
+                setTimeout(() => {
+                    displayLocalProduct(LOCAL_DB[query]);
+                    searchBtn.disabled = false;
+                    searchBtn.textContent = 'Analyser le produit';
+                }, 1000);
+                return;
+            }
+
+            // Essayer avec l'API (avec proxy CORS)
             try {
-                // Check if it's a barcode or product name
-                const isBarcode = /^\d+$/.test(query);
-                let productData;
-
-                if (isBarcode) {
-                    // Direct barcode search
-                    const response = await fetch(`${API_URL}/product/${query}.json`);
-                    const data = await response.json();
-                    
-                    if (data.status === 1) {
-                        displayProduct(data.product);
-                        saveToRecent(data.product);
-                    } else {
-                        showError('Produit non trouvé. Essayez avec le nom du produit.');
-                    }
+                // Utiliser un proxy CORS gratuit
+                const proxyUrl = 'https://corsproxy.io/?';
+                const apiUrl = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=1`;
+                
+                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+                const data = await response.json();
+                
+                if (data.products && data.products.length > 0) {
+                    displayProduct(data.products[0]);
                 } else {
-                    // Search by name
-                    const response = await fetch(`${API_URL}/search?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=10`);
-                    const data = await response.json();
-                    
-                    if (data.products && data.products.length > 0) {
-                        displaySearchResults(data.products);
-                    } else {
-                        showError('Aucun produit trouvé. Essayez une autre recherche.');
-                    }
+                    // Produit non trouvé - proposer une recherche manuelle
+                    showManualSearch(query);
                 }
             } catch (error) {
-                showError('Erreur de connexion. Vérifiez votre connexion internet.');
-                console.error(error);
+                console.error('Erreur:', error);
+                // En cas d'erreur, proposer une analyse manuelle
+                showManualSearch(query);
             } finally {
                 searchBtn.disabled = false;
                 searchBtn.textContent = 'Analyser le produit';
             }
         }
 
-        // Display search results
-        function displaySearchResults(products) {
+        function displayLocalProduct(product) {
             const resultsDiv = document.getElementById('searchResults');
-            
-            resultsDiv.innerHTML = '<h3 style="margin-bottom: 15px;">Résultats de recherche :</h3>';
-            
-            products.forEach(product => {
-                const status = analyzeProduct(product);
-                const productCard = document.createElement('div');
-                productCard.className = 'product-result';
-                productCard.style.cursor = 'pointer';
-                productCard.onclick = () => {
-                    displayProduct(product);
-                    saveToRecent(product);
-                };
-                
-                productCard.innerHTML = `
-                    <div class="product-header">
-                        ${product.image_url ? 
-                            `<img src="${product.image_url}" alt="${product.product_name}" class="product-image">` :
-                            `<div class="product-image" style="display: flex; align-items: center; justify-content: center; font-size: 30px;">📦</div>`
-                        }
-                        <div class="product-info" style="flex: 1;">
-                            <h3>${product.product_name || 'Produit sans nom'}</h3>
-                            <p>${product.brands || 'Marque inconnue'}</p>
-                            <p style="font-size: 12px; margin-top: 5px;">${product.code || ''}</p>
-                        </div>
+            const statusClass = product.status === 'halal' ? 'status-halal' : 
+                               product.status === 'haram' ? 'status-haram' : 'status-doubtful';
+            const statusText = product.status === 'halal' ? '✅ HALAL' :
+                              product.status === 'haram' ? '❌ HARAM' : '⚠️ DOUTEUX';
+
+            resultsDiv.innerHTML = `
+                <div class="product-result">
+                    <h3>${product.name}</h3>
+                    <p style="color: #666; margin: 5px 0;">${product.brand}</p>
+                    
+                    <div class="status-badge ${statusClass}">${statusText}</div>
+                    
+                    <div class="ingredient-analysis">
+                        <h4>📋 Ingrédients :</h4>
+                        <p style="font-size: 14px; line-height: 1.6; margin-top: 10px;">
+                            ${product.ingredients}
+                        </p>
                     </div>
-                    <div class="status-badge ${status.class}">${status.text}</div>
-                `;
-                
-                resultsDiv.appendChild(productCard);
-            });
+                    
+                    <div class="ingredient-analysis">
+                        <h4>💡 Analyse :</h4>
+                        <p style="font-size: 14px; margin-top: 10px;">
+                            ${product.reason}
+                        </p>
+                    </div>
+                    
+                    <p style="text-align: center; color: #666; font-size: 12px; margin-top: 20px;">
+                        ⚠️ Vérifiez toujours avec le fabricant en cas de doute
+                    </p>
+                </div>
+            `;
         }
 
-        // Display single product details
         function displayProduct(product) {
             const resultsDiv = document.getElementById('searchResults');
-            const status = analyzeProduct(product);
+            const analysis = analyzeIngredients(product.ingredients_text || '');
             
             resultsDiv.innerHTML = `
                 <div class="product-result">
                     <div class="product-header">
                         ${product.image_url ? 
                             `<img src="${product.image_url}" alt="${product.product_name}" class="product-image">` :
-                            `<div class="product-image" style="display: flex; align-items: center; justify-content: center; font-size: 30px;">📦</div>`
+                            `<div class="product-image" style="display: flex; align-items: center; justify-content: center; font-size: 30px; background: #f8f9fa;">📦</div>`
                         }
                         <div class="product-info" style="flex: 1;">
-                            <h3>${product.product_name || 'Produit sans nom'}</h3>
+                            <h3>${product.product_name || 'Produit'}</h3>
                             <p>${product.brands || 'Marque inconnue'}</p>
-                            <p style="font-size: 12px; margin-top: 5px;">Code: ${product.code || 'Non disponible'}</p>
                         </div>
                     </div>
                     
-                    <div class="status-badge ${status.class}">${status.text}</div>
-                    
-                    <div class="ingredient-analysis">
-                        <h4 style="margin-bottom: 10px;">📋 Analyse des ingrédients</h4>
-                        ${status.details}
-                    </div>
+                    <div class="status-badge ${analysis.statusClass}">${analysis.statusText}</div>
                     
                     ${product.ingredients_text ? `
                         <div class="ingredient-analysis">
-                            <h4 style="margin-bottom: 10px;">📝 Liste complète</h4>
-                            <p style="font-size: 14px; line-height: 1.6; color: #666;">
+                            <h4>📋 Ingrédients :</h4>
+                            <p style="font-size: 14px; line-height: 1.6; margin-top: 10px;">
                                 ${product.ingredients_text}
                             </p>
                         </div>
-                    ` : ''}
-                    
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-top: 15px;">
-                        <p style="font-size: 13px; color: #666; text-align: center;">
-                            ⚠️ Cette analyse est automatique. En cas de doute, vérifiez avec le fabricant.
-                        </p>
-                    </div>
+                        
+                        <div class="ingredient-analysis">
+                            <h4>💡 Analyse :</h4>
+                            ${analysis.details}
+                        </div>
+                    ` : '<p style="color: #666;">Ingrédients non disponibles</p>'}
                 </div>
             `;
         }
 
-        // Analyze product for halal status
-        function analyzeProduct(product) {
-            const ingredients = (product.ingredients_text || '').toLowerCase();
-            const allergens = (product.allergens || '').toLowerCase();
-            const traces = (product.traces || '').toLowerCase();
-            const allText = ingredients + ' ' + allergens + ' ' + traces;
-            
+        function analyzeIngredients(ingredients) {
+            const lower = ingredients.toLowerCase();
             let foundHaram = [];
             let foundDoubtful = [];
             
-            // Check for haram ingredients
-            HARAM_INGREDIENTS.forEach(ingredient => {
-                if (allText.includes(ingredient)) {
-                    foundHaram.push(ingredient);
-                }
+            HARAM_INGREDIENTS.forEach(ing => {
+                if (lower.includes(ing)) foundHaram.push(ing);
             });
             
-            // Check for doubtful ingredients
-            DOUBTFUL_INGREDIENTS.forEach(ingredient => {
-                if (allText.includes(ingredient)) {
-                    foundDoubtful.push(ingredient);
-                }
+            DOUBTFUL_INGREDIENTS.forEach(ing => {
+                if (lower.includes(ing) && !foundHaram.includes(ing)) foundDoubtful.push(ing);
             });
             
-            // Determine status
             if (foundHaram.length > 0) {
                 return {
-                    class: 'status-haram',
-                    text: '❌ HARAM - Non consommable',
-                    details: `
-                        <p style="color: #dc3545; font-weight: 600;">Ingrédients haram détectés :</p>
-                        <ul style="margin-top: 10px;">
-                            ${foundHaram.map(i => `<li>${i}</li>`).join('')}
-                        </ul>
-                    `
+                    statusClass: 'status-haram',
+                    statusText: '❌ HARAM',
+                    details: `<p style="color: #dc3545;">Ingrédients haram détectés : ${foundHaram.join(', ')}</p>`
                 };
             } else if (foundDoubtful.length > 0) {
                 return {
-                    class: 'status-doubtful',
-                    text: '⚠️ DOUTEUX - Vérification nécessaire',
-                    details: `
-                        <p style="color: #ffc107; font-weight: 600;">Ingrédients douteux détectés :</p>
-                        <ul style="margin-top: 10px;">
-                            ${foundDoubtful.map(i => `<li>${i}</li>`).join('')}
-                        </ul>
-                        <p style="margin-top: 10px; font-size: 13px;">Contactez le fabricant pour confirmer l'origine.</p>
-                    `
+                    statusClass: 'status-doubtful', 
+                    statusText: '⚠️ DOUTEUX',
+                    details: `<p style="color: #ffc107;">Ingrédients douteux : ${foundDoubtful.join(', ')}<br>Vérifiez l'origine avec le fabricant.</p>`
                 };
-            } else if (ingredients) {
-                return {
-                    class: 'status-halal',
-                    text: '✅ HALAL - Semble consommable',
-                    details: `
-                        <p style="color: #28a745; font-weight: 600;">Aucun ingrédient problématique détecté</p>
-                        <p style="margin-top: 10px; font-size: 13px;">Vérifiez toujours les labels de certification.</p>
-                    `
-                };
-            } else {
-                return {
-                    class: 'status-checking',
-                    text: '❓ ANALYSE INCOMPLÈTE',
-                    details: `
-                        <p style="color: #6c757d;">Informations insuffisantes pour l'analyse</p>
+            }
+            
+            return {
+                statusClass: 'status-halal',
+                statusText: '✅ SEMBLE HALAL',
+                details: '<p style="color: #28a745;">Aucun ingrédient problématique détecté</p>'
+            };
+        }
 
-                        <p style="margin-top: 10px; font-size: 13px;">Les ingrédients ne sont pas disponibles dans la base de données.</p>
+        function showManualSearch(query) {
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = `
+                <div class="product-result">
+                    <h3>🔍 Produit non trouvé</h3>
+                    <p style="color: #666; margin: 15px 0;">
+                        "${query}" n'est pas dans notre base de données.
+                    </p>
+                    
+                    <div class="info-card" style="background: #fff3cd; margin: 20px 0;">
+                        <h4 style="color: #856404;">💡 Que faire ?</h4>
+                        <p style="color: #856404;">
+                            1. Essayez un nom plus simple (ex: "coca" au lieu de "coca cola zero")<br>
+                            2. Testez avec les boutons de test ci-dessus<br>
+                            3. Vérifiez manuellement les ingrédients sur l'emballage
+                        </p>
+                    </div>
+                    
+                    <p style="text-align: center; margin-top: 20px;">
+                        <strong>Essayez ces produits :</strong><br>
+                        nutella, coca cola, haribo, kinder, chips, pepsi
+                    </p>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = `
+                <div class="error-message">
+                    <strong>⚠️ Attention</strong><br>
+                    ${message}
+                </div>
+            `;
+        }
+
+        // Test au chargement
+        window.addEventListener('load', () => {
+            console.log('App chargée avec succès !');
+            // Afficher un message de bienvenue
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = `
+                <div class="info-card">
+                    <h3>👋 Bienvenue sur HalalCheck !</h3>
+                    <p>• Tapez le nom d'un produit (ex: Nutella)</p>
+                    <p>• Ou utilisez les boutons de test rapide</p>
+                    <p>• L'app fonctionne même hors ligne !</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
+               
+
