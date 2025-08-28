@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#667eea">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>HalalCheck - Scanner Halal Gratuit</title>
+    <title>HalalCheck - Scanner de Code-Barres</title>
     <style>
         * {
             margin: 0;
@@ -38,11 +38,6 @@
         .header h1 {
             font-size: 28px;
             margin-bottom: 5px;
-        }
-
-        .header p {
-            opacity: 0.9;
-            font-size: 14px;
         }
 
         .nav-tabs {
@@ -90,43 +85,132 @@
             display: block;
         }
 
-        .search-container {
+        .scan-container {
+            text-align: center;
+            padding: 20px;
             background: white;
             border-radius: 15px;
-            padding: 20px;
             box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
         }
 
-        .search-input {
+        .scan-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .scan-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        #video-container {
+            display: none;
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        #video {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: 15px;
+        }
+
+        #scannerOverlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 150px;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        #scannerOverlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            50% { top: calc(100% - 3px); }
+            100% { top: 0; }
+        }
+
+        .barcode-input {
             width: 100%;
             padding: 15px;
             border: 2px solid #e9ecef;
             border-radius: 10px;
             font-size: 16px;
+            margin: 10px 0;
+            text-align: center;
+            font-family: monospace;
+            font-size: 18px;
         }
 
-        .search-input:focus {
+        .barcode-input:focus {
             outline: none;
             border-color: #667eea;
         }
 
         .search-button {
             width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
             padding: 15px;
             border: none;
             border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
-            margin-top: 15px;
             cursor: pointer;
         }
 
-        .search-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .or-divider {
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .or-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e9ecef;
+        }
+
+        .or-divider span {
+            background: white;
+            padding: 0 20px;
+            position: relative;
+            color: #999;
+            font-weight: 600;
         }
 
         .product-result {
@@ -135,30 +219,6 @@
             padding: 20px;
             margin: 20px 0;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .product-header {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .product-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-            background: #f8f9fa;
-        }
-
-        .product-info h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .product-info p {
-            color: #666;
-            font-size: 14px;
         }
 
         .status-badge {
@@ -187,41 +247,6 @@
             color: white;
         }
 
-        .ingredient-analysis {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
         .info-card {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border-radius: 15px;
@@ -234,45 +259,78 @@
             margin-bottom: 15px;
         }
 
-        .info-card p {
-            line-height: 1.6;
-            color: #666;
-            margin-bottom: 10px;
+        .camera-permission {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
         }
 
-        .test-buttons {
-            display: flex;
+        .test-products {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-top: 20px;
         }
 
         .test-btn {
-            flex: 1;
             padding: 10px;
             background: #f8f9fa;
-            border: 2px solid #667eea;
+            border: 2px solid #e9ecef;
             border-radius: 10px;
-            color: #667eea;
-            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
         }
 
         .test-btn:hover {
+            border-color: #667eea;
             background: #667eea;
             color: white;
         }
+
+        #stopScan {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 15px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
+    <!-- Bibliothèque QuaggaJS pour scanner les codes-barres -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 </head>
 <body>
     <div class="app-container">
         <div class="header">
             <h1>🌙 HalalCheck</h1>
-            <p>Scanner gratuit - Version 2.0</p>
+            <p>Scanner de Code-Barres v3.0</p>
         </div>
 
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="switchTab('scanner')">
-                🔍 Scanner
+                📷 Scanner
+            </button>
+            <button class="nav-tab" onclick="switchTab('search')">
+                🔍 Recherche
             </button>
             <button class="nav-tab" onclick="switchTab('guide')">
                 📚 Guide
@@ -280,110 +338,153 @@
         </div>
 
         <div class="content">
+            <!-- Scanner Tab -->
             <div id="scanner" class="section active">
-                <div class="search-container">
-                    <h2 style="margin-bottom: 15px;">🔍 Rechercher un produit</h2>
-                    <input type="text" 
-                           id="searchInput" 
-                           class="search-input" 
-                           placeholder="Ex: Nutella, Coca Cola, Kinder..."
-                           onkeypress="if(event.key === 'Enter') searchProduct()">
-                    <button class="search-button" id="searchBtn" onclick="searchProduct()">
-                        Analyser le produit
+                <div class="scan-container">
+                    <h2>📷 Scanner un code-barres</h2>
+                    <p style="color: #666; margin: 10px 0;">
+                        Scannez le code-barres du produit avec votre caméra
+                    </p>
+
+                    <button class="scan-button" onclick="startScanner()">
+                        <span style="font-size: 24px;">📸</span>
+                        Démarrer le Scanner
                     </button>
-                    
-                    <div class="test-buttons">
-                        <button class="test-btn" onclick="testProduct('nutella')">Test: Nutella</button>
-                        <button class="test-btn" onclick="testProduct('coca cola')">Test: Coca</button>
-                        <button class="test-btn" onclick="testProduct('haribo')">Test: Haribo</button>
+
+                    <div id="video-container">
+                        <div id="scanner-container"></div>
+                        <div id="scannerOverlay"></div>
+                        <button id="stopScan" onclick="stopScanner()">Arrêter le scan</button>
+                    </div>
+
+                    <div class="or-divider">
+                        <span>OU</span>
+                    </div>
+
+                    <h3>Entrer le code manuellement</h3>
+                    <input type="text" 
+                           id="barcodeInput" 
+                           class="barcode-input" 
+                           placeholder="Ex: 3017620422003"
+                           maxlength="13">
+                    <button class="search-button" onclick="searchByBarcode()">
+                        Rechercher ce code
+                    </button>
+
+                    <div class="test-products">
+                        <button class="test-btn" onclick="testBarcode('3017620422003')">
+                            Nutella<br><small>3017620422003</small>
+                        </button>
+                        <button class="test-btn" onclick="testBarcode('5449000000996')">
+                            Coca-Cola<br><small>5449000000996</small>
+                        </button>
+                        <button class="test-btn" onclick="testBarcode('4001686720547')">
+                            Haribo<br><small>4001686720547</small>
+                        </button>
+                        <button class="test-btn" onclick="testBarcode('8000500037560')">
+                            Kinder<br><small>8000500037560</small>
+                        </button>
                     </div>
                 </div>
 
-                <div id="searchResults"></div>
-
-                <div id="debugInfo" style="display:none; background: #f8f9fa; padding: 10px; border-radius: 10px; margin-top: 20px;">
-                    <h4>Info Debug:</h4>
-                    <p id="debugText"></p>
-                </div>
+                <div id="scanResult"></div>
             </div>
 
+            <!-- Search Tab -->
+            <div id="search" class="section">
+                <div class="scan-container">
+                    <h2>🔍 Recherche par nom</h2>
+                    <input type="text" 
+                           id="searchInput" 
+                           class="barcode-input" 
+                           placeholder="Ex: Nutella, Coca Cola..."
+                           style="font-family: inherit; font-size: 16px;">
+                    <button class="search-button" onclick="searchByName()">
+                        Analyser le produit
+                    </button>
+                </div>
+                <div id="searchResult"></div>
+            </div>
+
+            <!-- Guide Tab -->
             <div id="guide" class="section">
                 <div class="info-card">
-                    <h3>🥩 Ingrédients à surveiller</h3>
-                    <p><strong>HARAM :</strong></p>
-                    <p>• Porc et dérivés (gélatine de porc, E471 d'origine porcine)</p>
-                    <p>• Alcool et dérivés</p>
-                    <p>• Carmin/Cochenille (E120)</p>
-                    <p>• Sang et dérivés</p>
-                    
-                    <p style="margin-top: 15px;"><strong>DOUTEUX :</strong></p>
-                    <p>• Gélatine (origine non spécifiée)</p>
-                    <p>• E471-E477 (peuvent être d'origine animale)</p>
-                    <p>• Arômes (peuvent contenir de l'alcool)</p>
-                    <p>• Enzymes/Présure (dans les fromages)</p>
+                    <h3>📸 Comment scanner ?</h3>
+                    <p>1. Cliquez sur "Démarrer le Scanner"</p>
+                    <p>2. Autorisez l'accès à la caméra</p>
+                    <p>3. Placez le code-barres dans le cadre</p>
+                    <p>4. Le scan est automatique !</p>
                 </div>
 
                 <div class="info-card">
-                    <h3>✅ Labels de confiance</h3>
-                    <p>• AVS (France)</p>
-                    <p>• HMC (UK)</p>
-                    <p>• JAKIM (Malaisie)</p>
-                    <p>• MUI (Indonésie)</p>
-                    <p>• Halal Europe</p>
+                    <h3>🔢 Types de codes supportés</h3>
+                    <p>• EAN-13 (Europe)</p>
+                    <p>• EAN-8 (Petits produits)</p>
+                    <p>• UPC (Amérique)</p>
+                    <p>• Code 128</p>
                 </div>
 
                 <div class="info-card">
-                    <h3>💡 Conseils</h3>
-                    <p>• Les produits végans sont généralement sûrs</p>
-                    <p>• Vérifiez toujours la liste complète des ingrédients</p>
-                    <p>• En cas de doute, contactez le fabricant</p>
-                    <p>• Privilégiez les produits avec certification halal</p>
+                    <h3>❌ Ingrédients HARAM</h3>
+                    <p>• Porc et dérivés</p>
+                    <p>• Gélatine de porc</p>
+                    <p>• Alcool</p>
+                    <p>• E120 (Carmin)</p>
+                    <p>• Sang</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>⚠️ Ingrédients DOUTEUX</h3>
+                    <p>• Gélatine (origine non précisée)</p>
+                    <p>• E471-E477</p>
+                    <p>• Arômes</p>
+                    <p>• Enzymes</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Base de données locale de produits pour test
-        const LOCAL_DB = {
-            'nutella': {
+        // Base de données de produits avec codes-barres
+        const PRODUCT_DB = {
+            '3017620422003': {
                 name: 'Nutella',
                 brand: 'Ferrero',
-                ingredients: 'Sucre, huile de palme, NOISETTES 13%, cacao maigre 7,4%, LAIT écrémé en poudre 6,6%, LACTOSÉRUM en poudre, émulsifiants (lécithines [SOJA]), vanilline',
+                ingredients: 'Sucre, huile de palme, NOISETTES 13%, cacao maigre, LAIT écrémé en poudre, LACTOSÉRUM, émulsifiants (lécithines [SOJA]), vanilline',
                 status: 'doubtful',
-                reason: 'Peut contenir des émulsifiants E471 d\'origine animale non spécifiée et possibles traces d\'alcool dans la vanilline'
+                reason: 'Contient de la vanilline qui peut contenir des traces d\'alcool'
             },
-            'coca cola': {
-                name: 'Coca-Cola',
+            '5449000000996': {
+                name: 'Coca-Cola Original',
                 brand: 'The Coca-Cola Company',
-                ingredients: 'Eau gazéifiée, sucre, colorant (caramel E150d), acidifiant (acide phosphorique), arômes naturels (extraits végétaux), caféine',
+                ingredients: 'Eau gazéifiée, sucre, colorant (caramel E150d), acidifiant (acide phosphorique), arômes naturels, caféine',
                 status: 'halal',
                 reason: 'Aucun ingrédient d\'origine animale. Certifié halal dans plusieurs pays'
             },
-            'haribo': {
+            '4001686720547': {
                 name: 'Haribo Goldbears',
                 brand: 'Haribo',
-                ingredients: 'Sirop de glucose, sucre, gélatine, dextrose, concentrés de fruits, acidifiant (acide citrique), arômes',
+                ingredients: 'Sirop de glucose, sucre, gélatine, dextrose, concentrés de fruits, acidifiant, arômes',
                 status: 'haram',
                 reason: 'Contient de la gélatine de porc'
+            },
+            '8000500037560': {
+                name: 'Kinder Bueno',
+                brand: 'Ferrero',
+                ingredients: 'Chocolat au lait, sucre, huile de palme, farine de FROMENT, NOISETTES, LAIT écrémé en poudre',
+                status: 'halal',
+                reason: 'Pas d\'ingrédients d\'origine animale douteuse'
             }
         };
 
-        // Ingrédients problématiques
-        const HARAM_INGREDIENTS = [
-            'porc', 'pork', 'bacon', 'lard', 'saindoux', 
-            'gélatine de porc', 'pork gelatin', 'schwein',
-            'alcool', 'alcohol', 'ethanol', 'wine', 'vin',
-            'e120', 'carmin', 'cochenille'
-        ];
-
-        const DOUBTFUL_INGREDIENTS = [
-            'gélatine', 'gelatin', 'e471', 'e472', 'e473',
-            'mono', 'diglycérides', 'émulsifiant', 'vanilline',
-            'arômes', 'enzymes', 'présure'
-        ];
+        let scannerRunning = false;
 
         function switchTab(tabName) {
+            // Stop scanner if switching tabs
+            if (scannerRunning) {
+                stopScanner();
+            }
+            
             document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
             
@@ -391,218 +492,220 @@
             document.getElementById(tabName).classList.add('active');
         }
 
-        function testProduct(productName) {
-            document.getElementById('searchInput').value = productName;
-            searchProduct();
-        }
-
-        async function searchProduct() {
-            const query = document.getElementById('searchInput').value.trim().toLowerCase();
-            if (!query) {
-                showError('Veuillez entrer un nom de produit');
-                return;
-            }
-
-            const searchBtn = document.getElementById('searchBtn');
-            const resultsDiv = document.getElementById('searchResults');
+        function startScanner() {
+            const videoContainer = document.getElementById('video-container');
+            const scanButton = document.querySelector('.scan-button');
             
-            // Show loading
-            searchBtn.disabled = true;
-            searchBtn.textContent = 'Recherche...';
-            resultsDiv.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Analyse en cours...</p></div>';
+            videoContainer.style.display = 'block';
+            scanButton.style.display = 'none';
+            document.getElementById('stopScan').style.display = 'inline-block';
+            
+            scannerRunning = true;
 
-            // Vérifier d'abord la base locale
-            if (LOCAL_DB[query]) {
-                setTimeout(() => {
-                    displayLocalProduct(LOCAL_DB[query]);
-                    searchBtn.disabled = false;
-                    searchBtn.textContent = 'Analyser le produit';
-                }, 1000);
-                return;
-            }
-
-            // Essayer avec l'API (avec proxy CORS)
-            try {
-                // Utiliser un proxy CORS gratuit
-                const proxyUrl = 'https://corsproxy.io/?';
-                const apiUrl = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=1`;
-                
-                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-                const data = await response.json();
-                
-                if (data.products && data.products.length > 0) {
-                    displayProduct(data.products[0]);
-                } else {
-                    // Produit non trouvé - proposer une recherche manuelle
-                    showManualSearch(query);
+            // Configuration de Quagga
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector('#scanner-container'),
+                    constraints: {
+                        width: 400,
+                        height: 300,
+                        facingMode: "environment" // Caméra arrière
+                    }
+                },
+                decoder: {
+                    readers: [
+                        "ean_reader",
+                        "ean_8_reader",
+                        "code_128_reader",
+                        "upc_reader",
+                        "upc_e_reader"
+                    ]
+                },
+                locate: true,
+                locator: {
+                    patchSize: "medium",
+                    halfSample: true
                 }
-            } catch (error) {
-                console.error('Erreur:', error);
-                // En cas d'erreur, proposer une analyse manuelle
-                showManualSearch(query);
-            } finally {
-                searchBtn.disabled = false;
-                searchBtn.textContent = 'Analyser le produit';
+            }, function(err) {
+                if (err) {
+                    console.log(err);
+                    showCameraError();
+                    return;
+                }
+                console.log("Scanner démarré");
+                Quagga.start();
+            });
+
+            // Quand un code est détecté
+            Quagga.onDetected(function(data) {
+                const code = data.codeResult.code;
+                console.log("Code détecté:", code);
+                
+                // Vibration si disponible
+                if (navigator.vibrate) {
+                    navigator.vibrate(200);
+                }
+                
+                // Arrêter le scanner
+                stopScanner();
+                
+                // Afficher le résultat
+                document.getElementById('barcodeInput').value = code;
+                searchByBarcode(code);
+            });
+        }
+
+        function stopScanner() {
+            if (scannerRunning) {
+                Quagga.stop();
+                scannerRunning = false;
+                
+                const videoContainer = document.getElementById('video-container');
+                const scanButton = document.querySelector('.scan-button');
+                
+                videoContainer.style.display = 'none';
+                scanButton.style.display = 'inline-flex';
+                document.getElementById('stopScan').style.display = 'none';
+                
+                // Nettoyer le conteneur
+                document.getElementById('scanner-container').innerHTML = '';
             }
         }
 
-        function displayLocalProduct(product) {
-            const resultsDiv = document.getElementById('searchResults');
+        function showCameraError() {
+            const resultDiv = document.getElementById('scanResult');
+            resultDiv.innerHTML = `
+                <div class="camera-permission">
+                    <h3>⚠️ Accès à la caméra requis</h3>
+                    <p>Pour scanner les codes-barres, autorisez l'accès à la caméra dans les paramètres de votre navigateur.</p>
+                    <p style="margin-top: 10px;"><strong>Alternative :</strong> Entrez le code manuellement ci-dessous.</p>
+                </div>
+            `;
+            stopScanner();
+        }
+
+        function testBarcode(code) {
+            document.getElementById('barcodeInput').value = code;
+            searchByBarcode(code);
+        }
+
+        function searchByBarcode(code) {
+            if (!code) {
+                code = document.getElementById('barcodeInput').value.trim();
+            }
+            
+            if (!code) {
+                alert('Veuillez entrer un code-barres');
+                return;
+            }
+
+            const resultDiv = document.getElementById('scanResult');
+            
+            // Loading
+            resultDiv.innerHTML = '<div class="loading-spinner"></div>';
+            
+            // Chercher dans la base
+            setTimeout(() => {
+                const product = PRODUCT_DB[code];
+                
+                if (product) {
+                    displayProduct(product, resultDiv);
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="product-result">
+                            <h3>❓ Produit non trouvé</h3>
+                            <p style="color: #666;">Code: ${code}</p>
+                            <p style="margin-top: 15px;">Ce produit n'est pas encore dans notre base de données.</p>
+                            <div class="info-card" style="margin-top: 20px;">
+                                <p><strong>Que faire ?</strong></p>
+                                <p>• Vérifiez le code-barres</p>
+                                <p>• Essayez la recherche par nom</p>
+                                <p>• Testez avec les produits exemples</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }, 500);
+        }
+
+        function searchByName() {
+            const name = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!name) {
+                alert('Veuillez entrer un nom de produit');
+                return;
+            }
+
+            const resultDiv = document.getElementById('searchResult');
+            resultDiv.innerHTML = '<div class="loading-spinner"></div>';
+
+            setTimeout(() => {
+                // Recherche simple par nom
+                let found = null;
+                for (let code in PRODUCT_DB) {
+                    const product = PRODUCT_DB[code];
+                    if (product.name.toLowerCase().includes(name) || 
+                        product.brand.toLowerCase().includes(name)) {
+                        found = product;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    displayProduct(found, resultDiv);
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="product-result">
+                            <h3>❓ Produit non trouvé</h3>
+                            <p>Essayez : Nutella, Coca, Haribo, Kinder</p>
+                        </div>
+                    `;
+                }
+            }, 500);
+        }
+
+        function displayProduct(product, container) {
             const statusClass = product.status === 'halal' ? 'status-halal' : 
                                product.status === 'haram' ? 'status-haram' : 'status-doubtful';
             const statusText = product.status === 'halal' ? '✅ HALAL' :
                               product.status === 'haram' ? '❌ HARAM' : '⚠️ DOUTEUX';
 
-            resultsDiv.innerHTML = `
+            container.innerHTML = `
                 <div class="product-result">
                     <h3>${product.name}</h3>
-                    <p style="color: #666; margin: 5px 0;">${product.brand}</p>
+                    <p style="color: #666;">${product.brand}</p>
                     
                     <div class="status-badge ${statusClass}">${statusText}</div>
                     
-                    <div class="ingredient-analysis">
-                        <h4>📋 Ingrédients :</h4>
-                        <p style="font-size: 14px; line-height: 1.6; margin-top: 10px;">
+                    <div class="info-card" style="margin-top: 20px;">
+                        <h4>📋 Ingrédients</h4>
+                        <p style="font-size: 14px; line-height: 1.6;">
                             ${product.ingredients}
                         </p>
                     </div>
                     
-                    <div class="ingredient-analysis">
-                        <h4>💡 Analyse :</h4>
-                        <p style="font-size: 14px; margin-top: 10px;">
-                            ${product.reason}
-                        </p>
+                    <div class="info-card">
+                        <h4>💡 Analyse</h4>
+                        <p>${product.reason}</p>
                     </div>
                     
-                    <p style="text-align: center; color: #666; font-size: 12px; margin-top: 20px;">
-                        ⚠️ Vérifiez toujours avec le fabricant en cas de doute
+                    <p style="text-align: center; color: #999; font-size: 12px; margin-top: 20px;">
+                        Vérifiez toujours avec le fabricant en cas de doute
                     </p>
                 </div>
             `;
         }
 
-        function displayProduct(product) {
-            const resultsDiv = document.getElementById('searchResults');
-            const analysis = analyzeIngredients(product.ingredients_text || '');
-            
-            resultsDiv.innerHTML = `
-                <div class="product-result">
-                    <div class="product-header">
-                        ${product.image_url ? 
-                            `<img src="${product.image_url}" alt="${product.product_name}" class="product-image">` :
-                            `<div class="product-image" style="display: flex; align-items: center; justify-content: center; font-size: 30px; background: #f8f9fa;">📦</div>`
-                        }
-                        <div class="product-info" style="flex: 1;">
-                            <h3>${product.product_name || 'Produit'}</h3>
-                            <p>${product.brands || 'Marque inconnue'}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="status-badge ${analysis.statusClass}">${analysis.statusText}</div>
-                    
-                    ${product.ingredients_text ? `
-                        <div class="ingredient-analysis">
-                            <h4>📋 Ingrédients :</h4>
-                            <p style="font-size: 14px; line-height: 1.6; margin-top: 10px;">
-                                ${product.ingredients_text}
-                            </p>
-                        </div>
-                        
-                        <div class="ingredient-analysis">
-                            <h4>💡 Analyse :</h4>
-                            ${analysis.details}
-                        </div>
-                    ` : '<p style="color: #666;">Ingrédients non disponibles</p>'}
-                </div>
-            `;
-        }
-
-        function analyzeIngredients(ingredients) {
-            const lower = ingredients.toLowerCase();
-            let foundHaram = [];
-            let foundDoubtful = [];
-            
-            HARAM_INGREDIENTS.forEach(ing => {
-                if (lower.includes(ing)) foundHaram.push(ing);
-            });
-            
-            DOUBTFUL_INGREDIENTS.forEach(ing => {
-                if (lower.includes(ing) && !foundHaram.includes(ing)) foundDoubtful.push(ing);
-            });
-            
-            if (foundHaram.length > 0) {
-                return {
-                    statusClass: 'status-haram',
-                    statusText: '❌ HARAM',
-                    details: `<p style="color: #dc3545;">Ingrédients haram détectés : ${foundHaram.join(', ')}</p>`
-                };
-            } else if (foundDoubtful.length > 0) {
-                return {
-                    statusClass: 'status-doubtful', 
-                    statusText: '⚠️ DOUTEUX',
-                    details: `<p style="color: #ffc107;">Ingrédients douteux : ${foundDoubtful.join(', ')}<br>Vérifiez l'origine avec le fabricant.</p>`
-                };
+        // Gérer la fermeture du scanner si on quitte la page
+        window.addEventListener('beforeunload', () => {
+            if (scannerRunning) {
+                stopScanner();
             }
-            
-            return {
-                statusClass: 'status-halal',
-                statusText: '✅ SEMBLE HALAL',
-                details: '<p style="color: #28a745;">Aucun ingrédient problématique détecté</p>'
-            };
-        }
-
-        function showManualSearch(query) {
-            const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = `
-                <div class="product-result">
-                    <h3>🔍 Produit non trouvé</h3>
-                    <p style="color: #666; margin: 15px 0;">
-                        "${query}" n'est pas dans notre base de données.
-                    </p>
-                    
-                    <div class="info-card" style="background: #fff3cd; margin: 20px 0;">
-                        <h4 style="color: #856404;">💡 Que faire ?</h4>
-                        <p style="color: #856404;">
-                            1. Essayez un nom plus simple (ex: "coca" au lieu de "coca cola zero")<br>
-                            2. Testez avec les boutons de test ci-dessus<br>
-                            3. Vérifiez manuellement les ingrédients sur l'emballage
-                        </p>
-                    </div>
-                    
-                    <p style="text-align: center; margin-top: 20px;">
-                        <strong>Essayez ces produits :</strong><br>
-                        nutella, coca cola, haribo, kinder, chips, pepsi
-                    </p>
-                </div>
-            `;
-        }
-
-        function showError(message) {
-            const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = `
-                <div class="error-message">
-                    <strong>⚠️ Attention</strong><br>
-                    ${message}
-                </div>
-            `;
-        }
-
-        // Test au chargement
-        window.addEventListener('load', () => {
-            console.log('App chargée avec succès !');
-            // Afficher un message de bienvenue
-            const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = `
-                <div class="info-card">
-                    <h3>👋 Bienvenue sur HalalCheck !</h3>
-                    <p>• Tapez le nom d'un produit (ex: Nutella)</p>
-                    <p>• Ou utilisez les boutons de test rapide</p>
-                    <p>• L'app fonctionne même hors ligne !</p>
-                </div>
-            `;
         });
     </script>
 </body>
 </html>
-               
+            
+
 
