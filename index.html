@@ -591,7 +591,7 @@
 
         // Service Worker registration
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(reg => {
+           navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW:', err));
                 console.log('Service Worker registered');
             }).catch(err => {
                 console.log('Service Worker registration failed - normal en local');
@@ -806,4 +806,5 @@
                     text: '❓ ANALYSE INCOMPLÈTE',
                     details: `
                         <p style="color: #6c757d;">Informations insuffisantes pour l'analyse</p>
+
                         <p style="margin-top: 10px; font-size: 13px;">Les ingrédients ne sont pas disponibles dans la base de données.</p>
